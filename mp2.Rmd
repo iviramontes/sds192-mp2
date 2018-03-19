@@ -1,20 +1,25 @@
 ---
 title: "Mini-Project 2"
-author: "Your Name Here"
-date: "October 31, 2017"
+author: "Guadalupe Chimil, Annah Lee, Ivette Viramontes"
+date: "March 22, 2018"
 output: html_document
 ---
 
 
 ## Loading the data
-
-This project is so interesting and relevant to my life!
-
 ```{r, include=FALSE}
 load("house_elections.rda")
 load("candidates.rda")
 load("committees.rda")
 load("contributions.rda")
 load("individuals.rda")
+
+library(individuals.rda)
+select(individuals.rda , contains("Oil"))
+
+
+
+library(tidyverse)
+glimpse(house_elections)
 
 ```
