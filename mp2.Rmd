@@ -15,29 +15,20 @@ load("individuals.rda")
 ```
 
 ```{r}
-library(individuals)
-Women<-individuals %>%
-
-  filter(cmte_id=="C00283432"| cmte_id=="C00530766") 
-
-  filter(cmte_id == "C00473918"| 
-         cmte_id == "C00530766",
-         transaction_dt >= "01012012" & 
-         transaction_dt <= "12312012",
-         entity_type == "IND")
-
 Donations<- contributions %>%
   filter(cmte_id == "C00473918"| 
          cmte_id == "C00530766",
-         transaction_type == "24A")
+         transaction_type == "24E")
 
-
-join from candidates data the candidate name that identifies the cand_id number
 ```
 
+join from candidates data the candidate name that identifies the cand_id number
 
 Women Vote and Women SpeaK Out (ProChoice & ProLife) 
 Individuals that donate to their PAC
 How much did an individual donate to a committee (WV and WSO) in the year 2012?
+
+filter(cmte_id == "C00473918"| 
+         cmte_id == "C00530766")
 
 
