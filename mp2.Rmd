@@ -17,7 +17,7 @@ load("individuals.rda")
 
 ```{r}
 library(individuals)
-WIL<-individuals %>%
-  filter(cmte_id=="C00283432")
+Women<-individuals %>%
+  filter(cmte_id=="C00283432"| cmte_id=="C00530766")
 ```
 
