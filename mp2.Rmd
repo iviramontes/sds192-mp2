@@ -13,13 +13,11 @@ load("candidates.rda")
 load("committees.rda")
 load("contributions.rda")
 load("individuals.rda")
-
-library(individuals.rda)
-select(individuals.rda , contains("Oil"))
-
-
-
-library(tidyverse)
-glimpse(house_elections)
-
 ```
+
+```{r}
+library(individuals)
+WIL<-individuals %>%
+  filter(cmte_id=="C00283432")
+```
+
