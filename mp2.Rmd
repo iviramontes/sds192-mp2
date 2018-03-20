@@ -5,7 +5,6 @@ date: "March 22, 2018"
 output: html_document
 ---
 
-
 ## Loading the data
 ```{r, include=FALSE}
 load("house_elections.rda")
@@ -13,11 +12,10 @@ load("candidates.rda")
 load("committees.rda")
 load("contributions.rda")
 load("individuals.rda")
+```
 
-library(individuals) 
-filter()
-
-library(tidyverse)
-glimpse(house_elections)
-
+```{r}
+library(individuals)
+WIL<-individuals %>% 
+  filter(cmte_id=="C00283432"|cmte_id=="C00530766") 
 ```
