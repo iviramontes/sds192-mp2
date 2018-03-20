@@ -23,6 +23,6 @@ Women<-individuals %>%
   filter(cmte_id == "C00473918"| 
          cmte_id == "C00530766",
          transaction_dt <= "11062012",
-         entity_type == "IND")
+         entity_type == "IND")  
 
 ```
