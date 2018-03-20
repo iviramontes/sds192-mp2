@@ -14,10 +14,8 @@ load("committees.rda")
 load("contributions.rda")
 load("individuals.rda")
 
-library(individuals.rda)
-select(individuals.rda , contains("Oil"))
-
-
+library(individuals) 
+filter()
 
 library(tidyverse)
 glimpse(house_elections)
