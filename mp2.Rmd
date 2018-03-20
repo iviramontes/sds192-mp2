@@ -11,7 +11,7 @@ load("house_elections.rda")
 load("candidates.rda")
 load("committees.rda")
 load("contributions.rda")
-load("individuals.rda")
+load("individuals.rda") 
 ```
 
 ```{r}
@@ -22,7 +22,27 @@ Women<-individuals %>%
 
   filter(cmte_id == "C00473918"| 
          cmte_id == "C00530766",
+<<<<<<< HEAD
          transaction_dt <= "11062012",
          entity_type == "IND")  
+=======
+         transaction_dt >= "01012012" & 
+         transaction_dt <= "12312012",
+         entity_type == "IND")
+>>>>>>> d264936de7b10575216b5cfea51c9cbba53e0c98
 
+Donations<- contributions %>%
+  filter(cmte_id == "C00473918"| 
+         cmte_id == "C00530766",
+         transaction_type == "24A")
+
+
+join from candidates data the candidate name that identifies the cand_id number
 ```
+
+
+Women Vote and Women SpeaK Out (ProChoice & ProLife) 
+Individuals that donate to their PAC
+How much did an individual donate to a committee (WV and WSO) in the year 2012?
+
+
