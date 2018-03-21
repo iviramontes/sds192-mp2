@@ -32,16 +32,48 @@ Donations<- contributions %>%
          cmte_id == "C00530766",
          transaction_type == "24E")
 
-NativeAmerican <- individuals %>%
-  filter(transaction_type == "11") %>%
-  
+NatComm <- individuals %>%
+  filter(transaction_type == "11") %>% 
+  full_join(x = NativeAmerican, y = committees, by="cmte_id") 
+
   select(-amndt_ind, -rpt_type) %>%
   select( -transaction_pgi, -image_num) %>%
   select( -city, -state) %>%
   select( -zip_code, -employer) %>%
   select( -occupation, -other_id) %>%
   select( -tran_id, -file_num) %>% 
-  select( -memo_cd, -memo_text, -sub_id) 
+  select( -memo_cd, -memo_text, -sub_id)
+  
+NatComm2 <- individuals %>%
+  full_join(x=individuals, y=committees, by="cmte_id") %>%
+  filter(transaction_type == "11", 
+         entity_type == "ORG",
+         transaction_pgi == "G") %>% 
+  select(-amndt_ind, 
+         -rpt_type, 
+         -image_num, 
+         -city, 
+         -state, 
+         -zip_code, 
+         -employer,
+         -occupation, 
+         -other_id, 
+         -tran_id, 
+         -file_num, 
+         -memo_cd, 
+         -memo_text, 
+         -sub_id, 
+         -tres_name, 
+         -cmte_st1, 
+         -cmte_st2, 
+         -cmte_city, 
+         -cmte_state,
+         -cmte_zip,
+         -cmte_dsgn,
+         -cmte_filing_freq,
+         -connected_org_name,
+         -org_type,
+         -cand_id) 
 
 ```
 
@@ -54,4 +86,25 @@ How much did an individual donate to a committee (WV and WSO) in the year 2012?
 filter(cmte_id == "C00473918"| 
          cmte_id == "C00530766")
 
+```{r}
+  
+  select(-amndt_ind, -rpt_type) %>%
+  select( -transaction_pgi, -image_num) %>%
+  select( -city, -state) %>%
+  select( -zip_code, -employer) %>%
+  select( -occupation, -other_id) %>%
+  select( -tran_id, -file_num) %>% 
+  select( -memo_cd, -memo_text, -sub_id) 
+```  
 
+
+
+```{r}
+#install.packages("lubricate")  
+#library(lubridate)  
+#Native_Committees %>% 
+  #select(transaction_dt) %>% 
+  #filter(transaction_dt >= date("01012012") & transaction_dt <= date("12312012")) 
+
+Native_Commit %>% individuals %>%
+  full_join(x=NativeAmerican, y=committees, by="NACommit") 
