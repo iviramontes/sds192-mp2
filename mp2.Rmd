@@ -1,20 +1,28 @@
 ---
 title: "Mini-Project 2"
 author: "Guadalupe Chimil, Annah Lee, Ivette Viramontes"
-date: "March 22, 2018"
-output:
-  pdf_document: default
-  html_document: default
+date: "March 23, 2018"
+output: 
+  html_document:
+    code_folding: hide
 ---
 
-## Loading the data
-```{r, include=FALSE} 
+  Native Americans only began contributing to elections after 1988, with the federal regulatory act of Indian Gaming, that made tribes with gaming interests realize they needed to become more politically involved so they can protect their economic potential. This project examines Native American Contributions to the General Elections of the House, Presidential, and Senate during the 2012 campaign. We used the “Committee Master File” and “Contributions by Individuals” datasets from the Federal Election Commision (FEC) to find which committees Native American individuals and tribes donated to, and which political party the committees were affiliated with. From our graphs, we can see the relationship between Native American Contributions and where committees best believe Native American donations would politically advocate for them. 
+
+```{r, message = FALSE} 
+# Loading the data
 load("committees.rda")
 load("individuals.rda")  
 library(gridExtra) 
+library(grid)
+library(tidyverse)
+library(ggplot2)
+library(ggthemes)
+
 ```
 
-```{r}
+```{r, message = FALSE}
+#Contributions in $
 NatComm <- individuals %>% 
   full_join(x=individuals, y=committees, by="cmte_id") %>%
   filter(transaction_type == "11", 
@@ -23,8 +31,7 @@ NatComm <- individuals %>%
          cmte_type == "H"|cmte_type == "S"|cmte_type == "P",
          cmte_party_affiliation == "DEM" | 
          cmte_party_affiliation == "REP" ) %>% 
-  select(cmte_id, transaction_pgi, transaction_type, entity_type,
-         transaction_amt, cmte_type, cmte_party_affiliation) 
+  select(cmte_id, transaction_pgi, transaction_type, entity_type,transaction_amt, cmte_type, cmte_party_affiliation) 
 
 ggplot(data=NatComm, aes(x=cmte_type, y=transaction_amt,
                      fill=cmte_party_affiliation))+
@@ -32,87 +39,64 @@ ggplot(data=NatComm, aes(x=cmte_type, y=transaction_amt,
   ggtitle("Native American Contributions to the General Elections")+
   labs(x="General Elections", y="Amount Donated ($)", fill= "Party Affiliation")+
 #themes 
-  theme(plot.title = element_text(family="Arial",
-                                  face= "bold", size = 25)) +
-  theme(axis.title = element_text(family = "Arial",
-                                  face="bold", size=16)) +
-  theme(legend.title= element_text(family = "Arial",
-                                   face ="bold", size =14)) +
+  theme(plot.title = element_text(face= "bold", size = 17)) +
+  theme(axis.title = element_text(face="bold", size=16)) +
+  theme(legend.title= element_text(face ="bold", size =14)) +
   scale_fill_manual(values = c("blue","red")) +
   theme(panel.background = element_blank()) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
   scale_y_continuous(breaks= c(0,400000,800000,1200000), label=c("$0","$400,000", "$800,000", "$1,200,000"))
 ```
 
-```{r}
-house <- NatComm %>%
+  As you can see from the above graph, committees supported by Native American individuals and tribes, significantly donate more money to the House. As Mark Trahant writes in his article “The Hidden History of Why Native Americans Lose Elections,” Native Americans only make up .37 percent of Congress (about one-third of one percent) and only .23 percent of the population invest more than $200 on political campaigns. As business works, investors look to put their money to candidates that win. Therefore as Trahant says, “Rule Number One is you win an election, and more money follows.” In order to help a candidate you support make it to the presidential campaigns, they first have to win a spot in Congress. This is the main reason that we see more Native American Contributions going to candidates running for the House elections. 
+
+```{r, message = FALSE} 
+#Contributions in %
+house_race <- NatComm %>%  
   filter(cmte_type == "H")
-ggplot(house, aes(x=cmte_type, y=transaction_amt,
-                  fill=cmte_party_affiliation))+
-        geom_bar(stat="identity")+
-ggtitle("Native American Contributions to the House General Elections") +
-  labs(x="House", y="Amount Donated ($)", fill="Party Affiliation") +
-  theme(plot.title = element_text(family="Arial",
-                                  face= "bold", size = 14))+
-  theme(axis.title.x = element_text(family = "Arial",
-                                  face="bold", size=12),
+house_plot <-ggplot(house_race, aes(x= cmte_type, y= (..count..)/sum(..count..), fill= cmte_party_affiliation)) +
+  geom_bar(aes(y = (..count..)/sum(..count..))) +
+  labs(x="House", y="Donation (%)", fill= "Party Affiliation") +   theme(axis.title.y = element_text(face="bold", size=12))+
+  theme(axis.title.x = element_text(face="bold", size=12),
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank())+
-  theme(legend.title= element_text(family = "Arial",
-                                   face ="bold", size =10))+
   scale_fill_manual(values = c("blue","red"))+
   theme(panel.background = element_blank())+
-  theme(panel.grid.major = element_blank(), panel.grid.minor =
-        element_blank())+
-  scale_y_continuous(breaks= c(0,300000,600000,900000, 1200000),
-                     label=c("$0","$300,000", "$600,000", "$900,000",
-                             "$1,200,000"))
-  
-presidential <- NatComm %>%
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  theme(legend.position= "none")
+
+presidential_race <- NatComm %>%
   filter(cmte_type == "P")
-ggplot(presidential, aes(x=cmte_type, y=transaction_amt,
-                     fill=cmte_party_affiliation))+
-        geom_bar(stat="identity")+
-ggtitle("Native American Contributions to the Presidential General Elections") +
-  labs(x="Presidential", y="Amount Donated ($)", fill= "Party Affiliation") +
-  theme(plot.title = element_text(family="Arial",
-                                  face= "bold", size = 14))+
-  theme(axis.title.x = element_text(family = "Arial",
-                                  face="bold", size=12),
+presidential_plot <- ggplot(presidential_race, aes(x= cmte_type, y= (..count..)/sum(..count..), fill= cmte_party_affiliation)) +
+  geom_bar(aes(y = (..count..)/sum(..count..))) +
+  labs(x="Presidential", y="Donation (%)", fill= "Party Affiliation") +
+  theme(axis.title.y = element_text(face="bold", size=12))+
+  theme(axis.title.x = element_text(face="bold", size=12),
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank())+
-  theme(legend.title= element_text(family = "Arial",
-                                   face ="bold", size =10))+
   scale_fill_manual(values = c("blue","red"))+
   theme(panel.background = element_blank())+
-  theme(panel.grid.major = element_blank(), panel.grid.minor =
-        element_blank())+
-  scale_y_continuous(breaks= c(0,5000, 10000, 15000, 20000, 25000),
-                     label=c("$0","$5,000", "$10,000", "$15,000",
-                             "$20,000", "$25000"))
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  theme(legend.position = "none")
 
-senate <- NatComm %>%
+senate_race <- NatComm %>%
   filter(cmte_type == "S")
-ggplot(senate, aes(x=cmte_type, y=transaction_amt,
-                     fill=cmte_party_affiliation))+
-        geom_bar(stat="identity")+
-ggtitle("Native American Contributions to the Senate General Elections") +
-  labs(x="Senate", y="Amount Donated ($)", 
-       fill= "Party Affiliation") +
-  theme(plot.title = element_text(family="Arial",
-                                  face= "bold", size = 14))+
-  theme(axis.title.x = element_text(family = "Arial",
-                                  face="bold", size=12),
+senate_plot <- ggplot(senate_race, aes(x= cmte_type, y= (..count..)/sum(..count..), fill= cmte_party_affiliation)) +
+  geom_bar(aes(y = (..count..)/sum(..count..))) +
+  labs(x="Senate", y="Donation (%)", fill= "Party Affiliation") +
+  theme(axis.title.y = element_text(face="bold", size=12))+
+  theme(axis.title.x = element_text(face="bold", size=12),
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank())+
-  theme(legend.title= element_text(family = "Arial",
-                                   face ="bold", size =10))+
   scale_fill_manual(values = c("blue","red"))+
   theme(panel.background = element_blank())+
-  theme(panel.grid.major = element_blank(), panel.grid.minor =
-        element_blank())+
-  scale_y_continuous(breaks= c(0,1000, 2000, 3000, 4000),
-                     label=c("$0","1000", "$2000", "$3000", "$4000")
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  theme(legend.position="none")
 
-grid.arrange(house, presidential, senate, ncol = 3, nrow = 1)
+title1=textGrob("Native American Contributions to the General Elections", gp = gpar (fontface = "bold", fontsize = 15))
+grid.arrange(house_plot, presidential_plot, senate_plot, ncol = 3, nrow = 1, top = title1)
 ```
+
+  The second graph shows the percentage of Native American contributions to the general elections categorized by the Democrat and Republican parties. While the contributions of House and Senate elections are about 50% Republican and 50% Democrat, the contributions for the Presidential campaign are mostly Democrat. Before the 2008 presidential elections, the Obama administration campaigned hard to gain the support of Native Americans. After Obama’s 2008 election he received praise for the announcement of the Cobell Settlement, which was a collection of more than 100 lawsuits, totaling more than 3.4 billion dollars, that involved many Native American individuals and tribal governments against the federal government, for mismanaging natural resources and other tribal assets. Since then, Native Americans have been more involved in politics and are contributing more to major federal and state candidates and parties. During the 2012 campaign, tribes donated at least $2.5 million to Obama’s reelection campaign. The Native American support for Obama can be seen in the presidential bar chart, which shows that about 75 percent of the contributions were  donated to committees affiliated with the democrat party. 
+
+
