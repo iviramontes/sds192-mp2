@@ -7,7 +7,7 @@ output:
     code_folding: hide
 ---
 
-  Native Americans only began contributing to elections after 1988, with the federal regulatory act of Indian Gaming, that made tribes with gaming interests realize they needed to become more politically involved so they can protect their economic potential. This project examines Native American Contributions to the General Elections of the House, Presidential, and Senate during the 2012 campaign. We used the “Committee Master File” and “Contributions by Individuals” datasets from the Federal Election Commision (FEC) to find which committees Native American individuals and tribes donated to, and which political party the committees were affiliated with. From our graphs, we can see the relationship between Native American Contributions and where committees best believe Native American donations would politically advocate for them. 
+  Native Americans only began contributing to elections after 1988, with the federal regulatory act of Indian Gaming, that made tribes with gaming interests realize they needed to become more politically involved so they can protect their economic potential. This project examines Native American Contributions to the General Elections of the House, Presidential, and Senate during the 2012 campaigns. We used the “Committee Master File” and “Contributions by Individuals” datasets from the Federal Election Commision (FEC) to find which committees Native American individuals and tribes donated to, and which political party the committees were affiliated with. From our graphs, we can see the relationship between Native American Contributions and where committees best believe Native American donations would politically advocate for them. 
 
 ```{r, message = FALSE} 
 # Loading the data
