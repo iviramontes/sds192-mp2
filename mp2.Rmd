@@ -39,9 +39,9 @@ ggplot(data=NatComm, aes(x=cmte_type, y=transaction_amt,
   ggtitle("Native American Contributions to the General Elections")+
   labs(x="General Elections", y="Amount Donated ($)", fill= "Party Affiliation")+
 #themes 
-  theme(plot.title = element_text(face= "bold", size = 17)) +
-  theme(axis.title = element_text(face="bold", size=16)) +
-  theme(legend.title= element_text(face ="bold", size =14)) +
+  theme(plot.title = element_text(face= "bold", size = 14)) +
+  theme(axis.title = element_text(face="bold", size=12)) +
+  theme(legend.title= element_text(face ="bold", size =12)) +
   scale_fill_manual(values = c("blue","red")) +
   theme(panel.background = element_blank()) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
@@ -99,4 +99,4 @@ grid.arrange(house_plot, presidential_plot, senate_plot, ncol = 3, nrow = 1, top
 
   The second graph shows the percentage of Native American contributions to the general elections categorized by the Democrat and Republican parties. While the contributions of House and Senate elections are about 50% Republican and 50% Democrat, the contributions for the Presidential campaign are mostly Democrat. Before the 2008 presidential elections, the Obama administration campaigned hard to gain the support of Native Americans. After Obama’s 2008 election he received praise for the announcement of the Cobell Settlement, which was a collection of more than 100 lawsuits, totaling more than 3.4 billion dollars, that involved many Native American individuals and tribal governments against the federal government, for mismanaging natural resources and other tribal assets. Since then, Native Americans have been more involved in politics and are contributing more to major federal and state candidates and parties. During the 2012 campaign, tribes donated at least $2.5 million to Obama’s reelection campaign. The Native American support for Obama can be seen in the presidential bar chart, which shows that about 75 percent of the contributions were  donated to committees affiliated with the democrat party. 
 
-
+See [https://github.com/iviramontes/sds192-mp2](https://github.com/iviramontes/sds192-mp2) for our GitHub Repository. 
