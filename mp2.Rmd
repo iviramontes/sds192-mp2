@@ -13,9 +13,6 @@ load("committees.rda")
 load("individuals.rda")  
 library(gridExtra) 
 ```
-Mini Presentation feedback: 
-
-- Use Grid arrange to put the graphs side to side and show percentage vs amount  
 
 ```{r}
 NatComm <- individuals %>% 
@@ -33,7 +30,7 @@ ggplot(data=NatComm, aes(x=cmte_type, y=transaction_amt,
                      fill=cmte_party_affiliation))+
         geom_bar(stat="identity")+
   ggtitle("Native American Contributions to the General Elections")+
-  labs(x="Elections", y="Amount Donated ($)", fill= "Party Affiliation")+
+  labs(x="General Elections", y="Amount Donated ($)", fill= "Party Affiliation")+
 #themes
   theme(plot.title = element_text(family="Arial",
                                   face= "bold", size = 25)) +
@@ -44,16 +41,17 @@ ggplot(data=NatComm, aes(x=cmte_type, y=transaction_amt,
   scale_fill_manual(values = c("blue","red")) +
   theme(panel.background = element_blank()) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
-  scale_y_continuous(breaks= c(0,400000,800000,1200000), label=c("$0","$400,000", "$800,000", "$1,200,000")) 
+  scale_y_continuous(breaks= c(0,400000,800000,1200000), label=c("$0","$400,000", "$800,000", "$1,200,000"))
 ```
 
 ```{r}
-house_race <- NatComm %>%
+house <- NatComm %>%
   filter(cmte_type == "H")
-house_plot <-ggplot(house_race, aes(x= cmte_type, y= (..count..)/sum(..count..), fill= cmte_party_affiliation)) +
-  geom_bar(aes(y = (..count..)/sum(..count..))) +
-ggtitle("Percentages of Native American\nContributions to the House Elections") +
-  labs(x="House Elections", y="Donation (%)", fill= "Party Affiliation") +
+ggplot(house, aes(x=cmte_type, y=transaction_amt,
+                     fill=cmte_party_affiliation))+
+        geom_bar(stat="identity")+
+ggtitle("Native American Contributions to the House General Elections") +
+  labs(x="House Elections", y="Amount Donated ($)", fill= "Party Affiliation") +
   theme(plot.title = element_text(family="Arial",
                                   face= "bold", size = 12))+
   theme(axis.title = element_text(family = "Arial",
@@ -64,12 +62,13 @@ ggtitle("Percentages of Native American\nContributions to the House Elections") 
   theme(panel.background = element_blank())+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
   
-presidential_race <- NatComm %>%
+presidential <- NatComm %>%
   filter(cmte_type == "P")
-presidential_plot <- ggplot(presidential_race, aes(x= cmte_type, y= (..count..)/sum(..count..), fill= cmte_party_affiliation)) +
-  geom_bar(aes(y = (..count..)/sum(..count..))) +
-ggtitle("Percentages of Native American\nContributions to the Presidential Elections") +
-  labs(x="Presidential Elections", y="Donation (%)", fill= "Party Affiliation") +
+ggplot(presidential, aes(x=cmte_type, y=transaction_amt,
+                     fill=cmte_party_affiliation))+
+        geom_bar(stat="identity")+
+ggtitle("Native American Contributions to the Presidential General Elections") +
+  labs(x="Presidential Elections", y="Amount Donated ($)", fill= "Party Affiliation") +
   theme(plot.title = element_text(family="Arial",
                                   face= "bold", size = 12))+
   theme(axis.title = element_text(family = "Arial",
@@ -80,12 +79,13 @@ ggtitle("Percentages of Native American\nContributions to the Presidential Elect
   theme(panel.background = element_blank())+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
-senate_race <- NatComm %>%
+senate <- NatComm %>%
   filter(cmte_type == "S")
-senate_plot <- ggplot(senate_race, aes(x= cmte_type, y= (..count..)/sum(..count..), fill= cmte_party_affiliation)) +
-  geom_bar(aes(y = (..count..)/sum(..count..))) +
-ggtitle("Percentages of Native American\nContributions to the Senate Elections") +
-  labs(x="Senate Elections", y="Donation (%)", fill= "Party Affiliation") +
+ggplot(senate, aes(x=cmte_type, y=transaction_amt,
+                     fill=cmte_party_affiliation))+
+        geom_bar(stat="identity")+
+ggtitle("Native American Contributions to the Senate General Elections") +
+  labs(x="Senate Elections", y="Amount Donated ($)", fill= "Party Affiliation") +
   theme(plot.title = element_text(family="Arial",
                                   face= "bold", size = 12))+
   theme(axis.title = element_text(family = "Arial",
@@ -96,7 +96,5 @@ ggtitle("Percentages of Native American\nContributions to the Senate Elections")
   theme(panel.background = element_blank())+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 
-grid.arrange(house_plot, presidential_plot, senate_plot,
-          ncol = 3, nrow = 1)
+grid.arrange(house, presidential, senate, ncol = 3, nrow = 1)
 ```
-
