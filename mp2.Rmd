@@ -31,7 +31,7 @@ ggplot(data=NatComm, aes(x=cmte_type, y=transaction_amt,
         geom_bar(stat="identity")+
   ggtitle("Native American Contributions to the General Elections")+
   labs(x="General Elections", y="Amount Donated ($)", fill= "Party Affiliation")+
-#themes
+#themes 
   theme(plot.title = element_text(family="Arial",
                                   face= "bold", size = 25)) +
   theme(axis.title = element_text(family = "Arial",
